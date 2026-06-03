@@ -48,6 +48,7 @@ import PluginIcon from "../icons/plugin.svg";
 import ShortcutkeyIcon from "../icons/shortcutkey.svg";
 import McpToolIcon from "../icons/tool.svg";
 import HeadphoneIcon from "../icons/headphone.svg";
+import GlobeIcon from "../icons/globe.svg";
 import {
   BOT_HELLO,
   ChatMessage,
@@ -503,6 +504,8 @@ export function ChatActions(props: {
   setShowShortcutKeyModal: React.Dispatch<React.SetStateAction<boolean>>;
   setUserInput: (input: string) => void;
   setShowChatSidePanel: React.Dispatch<React.SetStateAction<boolean>>;
+  enableWebSearch: boolean;
+  toggleWebSearch: () => void;
 }) {
   const config = useAppConfig();
   const navigate = useNavigate();
@@ -832,6 +835,11 @@ export function ChatActions(props: {
             icon={<ShortcutkeyIcon />}
           />
         )}
+        <ChatAction
+          onClick={props.toggleWebSearch}
+          text={props.enableWebSearch ? "🌐 搜索中" : "🌐 搜索"}
+          icon={<GlobeIcon />}
+        />
         {!isMobileScreen && <MCPAction />}
       </>
       <div className={styles["chat-input-actions-end"]}>
@@ -1000,6 +1008,7 @@ function _Chat() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [enableWebSearch, setEnableWebSearch] = useState(false);
   const { submitKey, shouldSubmit } = useSubmitHandler();
   const scrollRef = useRef<HTMLDivElement>(null);
   const isScrolledToBottom = scrollRef?.current
@@ -1102,7 +1111,7 @@ function _Chat() {
     }
   };
 
-  const doSubmit = (userInput: string) => {
+  const doSubmit = async (userInput: string) => {
     if (userInput.trim() === "" && isEmpty(attachImages)) return;
     const matchCommand = chatCommands.match(userInput);
     if (matchCommand.matched) {
@@ -1111,13 +1120,38 @@ function _Chat() {
       matchCommand.invoke();
       return;
     }
+
     setIsLoading(true);
+
+    let finalInput = userInput;
+    if (enableWebSearch) {
+      try {
+        setUserInput("🔍 正在搜索...");
+        const searchRes = await fetch(
+          `/api/search?q=${encodeURIComponent(userInput)}`,
+        );
+        const searchData = await searchRes.json();
+        if (searchData.results && searchData.results.length > 0) {
+          const searchContext = searchData.results
+            .slice(0, 5)
+            .map(
+              (r: { title: string; url: string; snippet: string }, i: number) =>
+                `[${i + 1}] ${r.title}\n    ${r.snippet}\n    URL: ${r.url}`,
+            )
+            .join("\n\n");
+          finalInput = `【联网搜索结果】\n以下是与问题相关的网络搜索结果，请基于这些信息回答用户问题：\n\n${searchContext}\n\n【用户问题】\n${userInput}`;
+        }
+      } catch (e) {
+        console.error("[WebSearch] failed", e);
+      }
+    }
+
+    setUserInput("");
     chatStore
-      .onUserInput(userInput, attachImages)
+      .onUserInput(finalInput, attachImages)
       .then(() => setIsLoading(false));
     setAttachImages([]);
     chatStore.setLastInput(userInput);
-    setUserInput("");
     setPromptHints([]);
     if (!isMobileScreen) inputRef.current?.focus();
     setAutoScroll(true);
@@ -2067,6 +2101,8 @@ function _Chat() {
                 setShowShortcutKeyModal={setShowShortcutKeyModal}
                 setUserInput={setUserInput}
                 setShowChatSidePanel={setShowChatSidePanel}
+                enableWebSearch={enableWebSearch}
+                toggleWebSearch={() => setEnableWebSearch((v) => !v)}
               />
               <label
                 className={clsx(styles["chat-input-panel-inner"], {
