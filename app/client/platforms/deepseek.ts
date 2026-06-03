@@ -25,6 +25,26 @@ import {
 import { RequestPayload } from "./openai";
 import { fetch } from "@/app/utils/stream";
 
+const WEBSEARCH_TOOL = {
+  type: "function" as const,
+  function: {
+    name: "WebSearch",
+    description:
+      "Perform web searching using a natural language query. Use this when you need up-to-date information or facts beyond your knowledge cutoff.",
+    parameters: {
+      type: "object" as const,
+      properties: {
+        query: {
+          type: "string",
+          description:
+            "A search query phrased as a clear, specific natural language question or statement that includes key context.",
+        },
+      },
+      required: ["query"],
+    },
+  },
+};
+
 export class DeepSeekApi implements LLMApi {
   private disableListModels = true;
 
@@ -142,12 +162,36 @@ export class DeepSeekApi implements LLMApi {
           .getAsTools(
             useChatStore.getState().currentSession().mask?.plugin || [],
           );
+
+        // Always register WebSearch tool for autonomous web lookup
+        const allTools = [...(tools as any[]), WEBSEARCH_TOOL];
+        const allFuncs = {
+          ...funcs,
+          WebSearch: async (args: { query: string }) => {
+            const searchUrl = `/api/search?q=${encodeURIComponent(args.query)}`;
+            const resp = await fetch(searchUrl);
+            const data = await resp.json();
+            if (data.results?.length > 0) {
+              return {
+                data: data.results
+                  .slice(0, 5)
+                  .map(
+                    (r: { title: string; url: string; snippet: string }, i: number) =>
+                      `[${i + 1}] ${r.title}\n  ${r.snippet}\n  URL: ${r.url}`,
+                  )
+                  .join("\n\n"),
+              };
+            }
+            return { data: "No results found." };
+          },
+        };
+
         return streamWithThink(
           chatPath,
           requestPayload,
           getHeaders(),
-          tools as any,
-          funcs,
+          allTools,
+          allFuncs,
           controller,
           // parseSSE
           (text: string, runTools: ChatMessageTool[]) => {

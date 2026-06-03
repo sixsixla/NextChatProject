@@ -837,7 +837,7 @@ export function ChatActions(props: {
         )}
         <ChatAction
           onClick={props.toggleWebSearch}
-          text={props.enableWebSearch ? "🌐 已开启" : "🌐 搜索"}
+          text="🌐 搜索"
           icon={<GlobeIcon />}
         />
         {!isMobileScreen && <MCPAction />}
@@ -1122,33 +1122,9 @@ function _Chat() {
     }
 
     setIsLoading(true);
-
-    let finalInput = userInput;
-    if (enableWebSearch) {
-      try {
-        setUserInput("🔍 正在搜索...");
-        const searchRes = await fetch(
-          `/api/search?q=${encodeURIComponent(userInput)}`,
-        );
-        const searchData = await searchRes.json();
-        if (searchData.results && searchData.results.length > 0) {
-          const searchContext = searchData.results
-            .slice(0, 5)
-            .map(
-              (r: { title: string; url: string; snippet: string }, i: number) =>
-                `[${i + 1}] ${r.title}\n    ${r.snippet}\n    URL: ${r.url}`,
-            )
-            .join("\n\n");
-          finalInput = `【联网搜索结果】\n以下是与问题相关的网络搜索结果，请基于这些信息回答用户问题：\n\n${searchContext}\n\n【用户问题】\n${userInput}`;
-        }
-      } catch (e) {
-        console.error("[WebSearch] failed", e);
-      }
-    }
-
     setUserInput("");
     chatStore
-      .onUserInput(finalInput, attachImages)
+      .onUserInput(userInput, attachImages)
       .then(() => setIsLoading(false));
     setAttachImages([]);
     chatStore.setLastInput(userInput);
