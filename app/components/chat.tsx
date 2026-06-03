@@ -837,7 +837,7 @@ export function ChatActions(props: {
         )}
         <ChatAction
           onClick={props.toggleWebSearch}
-          text={props.enableWebSearch ? "🌐 搜索中" : "🌐 搜索"}
+          text={props.enableWebSearch ? "🌐 已开启" : "🌐 搜索"}
           icon={<GlobeIcon />}
         />
         {!isMobileScreen && <MCPAction />}
