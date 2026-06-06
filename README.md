@@ -1,484 +1,148 @@
-<div align="center">
+# RemoteAI
 
-<a href='https://nextchat.club'>
-  <img src="https://github.com/user-attachments/assets/83bdcc07-ae5e-4954-a53a-ac151ba6ccf3" width="1000" alt="icon"/>
-</a>
+RemoteAI 是基于 [ChatGPT-Next-Web / NextChat](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web) 二次开发的个人 AI Chat 工具。项目目标是：免费部署到 Vercel，移动端/PWA 使用方便，用户可以在前端填写自己的 API Key，并为 DeepSeek 等默认无联网搜索能力的模型补上 WebSearch 工具。
 
-<h1 align="center">NextChat</h1>
+当前仓库：`github.com/sixsixla/NextChatProject`
 
-English / [简体中文](./README_CN.md)
+当前部署：`https://next-chat-project-theta.vercel.app`
 
-> This fork is customized as **RemoteAI**: a free Vercel-deployable, mobile-friendly AI chat tool for personal API keys, with an added WebSearch tool for DeepSeek-style models that do not provide built-in web search. See [RemoteAI change notes](./REMOTEAI_CHANGES.md).
+## 项目目的
 
-<a href="https://trendshift.io/repositories/5973" target="_blank"><img src="https://trendshift.io/api/badge/repositories/5973" alt="ChatGPTNextWeb%2FChatGPT-Next-Web | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+- 基于 NextChat 成熟的聊天 UI、PWA、模型配置和多端适配能力，快速得到一个可用的私人 AI Chat 工具。
+- 面向安卓手机等移动端使用场景，部署后可以直接在浏览器打开，也可以添加到桌面当作 PWA 使用。
+- 不在服务端统一配置 DeepSeek API Key，而是让用户在设置页填写自己的 API Key，保存在浏览器本地。
+- 给 DeepSeek V4 Pro、DeepSeek V4 Flash 等默认不带联网搜索能力的模型增加免费好用的 WebSearch 工具。
+- 保留访问码保护，通过 Vercel 环境变量 `CODE` 控制是否需要站点密码。
 
-✨ Light and Fast AI Assistant,with Claude, DeepSeek, GPT4 & Gemini Pro support.
+## 相比原版 NextChat 做了什么
 
-[![Saas][Saas-image]][saas-url]
-[![Web][Web-image]][web-url]
-[![Windows][Windows-image]][download-url]
-[![MacOS][MacOS-image]][download-url]
-[![Linux][Linux-image]][download-url]
+### DeepSeek 使用体验
 
-[NextChatAI](https://nextchat.club?utm_source=readme) / [iOS APP](https://apps.apple.com/us/app/nextchat-ai/id6743085599) / [Web App Demo](https://app.nextchat.club) / [Desktop App](https://github.com/Yidadaa/ChatGPT-Next-Web/releases) / [Enterprise Edition](#enterprise-edition)
+NextChat 已经支持 DeepSeek，本项目保留这条路径，并围绕个人 API Key 使用场景做了说明和适配。
 
-[saas-url]: https://nextchat.club?utm_source=readme
-[saas-image]: https://img.shields.io/badge/NextChat-Saas-green?logo=microsoftedge
-[web-url]: https://app.nextchat.club/
-[download-url]: https://github.com/Yidadaa/ChatGPT-Next-Web/releases
-[Web-image]: https://img.shields.io/badge/Web-PWA-orange?logo=microsoftedge
-[Windows-image]: https://img.shields.io/badge/-Windows-blue?logo=windows
-[MacOS-image]: https://img.shields.io/badge/-MacOS-black?logo=apple
-[Linux-image]: https://img.shields.io/badge/-Linux-333?logo=ubuntu
+使用方式：
 
-[<img src="https://zeabur.com/button.svg" alt="Deploy on Zeabur" height="30">](https://zeabur.com/templates/ZBUEFA) [<img src="https://vercel.com/button" alt="Deploy on Vercel" height="30">](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FChatGPTNextWeb%2FChatGPT-Next-Web&env=OPENAI_API_KEY&env=CODE&project-name=nextchat&repository-name=NextChat) [<img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod" height="30">](https://gitpod.io/#https://github.com/ChatGPTNextWeb/NextChat) [<img src="https://oss.opendeploy.dev/static/deploy-with-your-agent.svg" alt="Deploy with your agent" height="30">](https://opendeploy.dev/github/ChatGPTNextWeb/NextChat)
+1. 进入设置页。
+2. 模型服务商选择 `DeepSeek`。
+3. 填写自己的 DeepSeek API Key。
+4. 如需自定义模型，在模型配置里使用 `@DeepSeek` 后缀。
 
-[<img src="https://github.com/user-attachments/assets/903482d4-3e87-4134-9af1-f2588fa90659" height="50" width="" >](https://monica.im/?utm=nxcrp)
+示例：
 
-</div>
-
-## ❤️ Sponsor AI API
-
-<a href='https://302.ai/'>
-  <img src="https://github.com/user-attachments/assets/a03edf82-2031-4f23-bdb8-bfc0bfd168a4" width="100%" alt="icon"/>
-</a>
-
-[302.AI](https://302.ai/) is a pay-as-you-go AI application platform that offers the most comprehensive AI APIs and online applications available.
-
-## 🥳 Cheer for NextChat iOS Version Online!
-
-> [👉 Click Here to Install Now](https://apps.apple.com/us/app/nextchat-ai/id6743085599)
-
-> [❤️ Source Code Coming Soon](https://github.com/ChatGPTNextWeb/NextChat-iOS)
-
-![Github iOS Image](https://github.com/user-attachments/assets/e0aa334f-4c13-4dc9-8310-e3b09fa4b9f3)
-
-## 🫣 NextChat Support MCP !
-
-> Before build, please set env ENABLE_MCP=true
-
-<img src="https://github.com/user-attachments/assets/d8851f40-4e36-4335-b1a4-ec1e11488c7e"/>
-
-## Enterprise Edition
-
-Meeting Your Company's Privatization and Customization Deployment Requirements:
-
-- **Brand Customization**: Tailored VI/UI to seamlessly align with your corporate brand image.
-- **Resource Integration**: Unified configuration and management of dozens of AI resources by company administrators, ready for use by team members.
-- **Permission Control**: Clearly defined member permissions, resource permissions, and knowledge base permissions, all controlled via a corporate-grade Admin Panel.
-- **Knowledge Integration**: Combining your internal knowledge base with AI capabilities, making it more relevant to your company's specific business needs compared to general AI.
-- **Security Auditing**: Automatically intercept sensitive inquiries and trace all historical conversation records, ensuring AI adherence to corporate information security standards.
-- **Private Deployment**: Enterprise-level private deployment supporting various mainstream private cloud solutions, ensuring data security and privacy protection.
-- **Continuous Updates**: Ongoing updates and upgrades in cutting-edge capabilities like multimodal AI, ensuring consistent innovation and advancement.
-
-For enterprise inquiries, please contact: **business@nextchat.dev**
-
-## Screenshots
-
-![Settings](./docs/images/settings.png)
-
-![More](./docs/images/more.png)
-
-## Features
-
-- **Deploy for free with one-click** on Vercel in under 1 minute
-- Compact client (~5MB) on Linux/Windows/MacOS, [download it now](https://github.com/Yidadaa/ChatGPT-Next-Web/releases)
-- Fully compatible with self-deployed LLMs, recommended for use with [RWKV-Runner](https://github.com/josStorer/RWKV-Runner) or [LocalAI](https://github.com/go-skynet/LocalAI)
-- Privacy first, all data is stored locally in the browser
-- Markdown support: LaTex, mermaid, code highlight, etc.
-- Responsive design, dark mode and PWA
-- Fast first screen loading speed (~100kb), support streaming response
-- New in v2: create, share and debug your chat tools with prompt templates (mask)
-- Awesome prompts powered by [awesome-chatgpt-prompts-zh](https://github.com/PlexPt/awesome-chatgpt-prompts-zh) and [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)
-- Automatically compresses chat history to support long conversations while also saving your tokens
-- I18n: English, 简体中文, 繁体中文, 日本語, Français, Español, Italiano, Türkçe, Deutsch, Tiếng Việt, Русский, Čeština, 한국어, Indonesia
-
-<div align="center">
-   
-![主界面](./docs/images/cover.png)
-
-</div>
-
-## Roadmap
-
-- [x] System Prompt: pin a user defined prompt as system prompt [#138](https://github.com/Yidadaa/ChatGPT-Next-Web/issues/138)
-- [x] User Prompt: user can edit and save custom prompts to prompt list
-- [x] Prompt Template: create a new chat with pre-defined in-context prompts [#993](https://github.com/Yidadaa/ChatGPT-Next-Web/issues/993)
-- [x] Share as image, share to ShareGPT [#1741](https://github.com/Yidadaa/ChatGPT-Next-Web/pull/1741)
-- [x] Desktop App with tauri
-- [x] Self-host Model: Fully compatible with [RWKV-Runner](https://github.com/josStorer/RWKV-Runner), as well as server deployment of [LocalAI](https://github.com/go-skynet/LocalAI): llama/gpt4all/rwkv/vicuna/koala/gpt4all-j/cerebras/falcon/dolly etc.
-- [x] Artifacts: Easily preview, copy and share generated content/webpages through a separate window [#5092](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/pull/5092)
-- [x] Plugins: support network search, calculator, any other apis etc. [#165](https://github.com/Yidadaa/ChatGPT-Next-Web/issues/165) [#5353](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/issues/5353)
-  - [x] network search, calculator, any other apis etc. [#165](https://github.com/Yidadaa/ChatGPT-Next-Web/issues/165) [#5353](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/issues/5353)
-- [x] Supports Realtime Chat [#5672](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/issues/5672)
-- [ ] local knowledge base
-
-## What's New
-
-- 🚀 v2.15.8 Now supports Realtime Chat [#5672](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/issues/5672)
-- 🚀 v2.15.4 The Application supports using Tauri fetch LLM API, MORE SECURITY! [#5379](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/issues/5379)
-- 🚀 v2.15.0 Now supports Plugins! Read this: [NextChat-Awesome-Plugins](https://github.com/ChatGPTNextWeb/NextChat-Awesome-Plugins)
-- 🚀 v2.14.0 Now supports Artifacts & SD
-- 🚀 v2.10.1 support Google Gemini Pro model.
-- 🚀 v2.9.11 you can use azure endpoint now.
-- 🚀 v2.8 now we have a client that runs across all platforms!
-- 🚀 v2.7 let's share conversations as image, or share to ShareGPT!
-- 🚀 v2.0 is released, now you can create prompt templates, turn your ideas into reality! Read this: [ChatGPT Prompt Engineering Tips: Zero, One and Few Shot Prompting](https://www.allabtai.com/prompt-engineering-tips-zero-one-and-few-shot-prompting/).
-
-## Get Started
-
-1. Get [OpenAI API Key](https://platform.openai.com/account/api-keys);
-2. Click
-   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYidadaa%2FChatGPT-Next-Web&env=OPENAI_API_KEY&env=CODE&project-name=chatgpt-next-web&repository-name=ChatGPT-Next-Web), remember that `CODE` is your page password;
-3. Enjoy :)
-
-## FAQ
-
-[English > FAQ](./docs/faq-en.md)
-
-## Keep Updated
-
-If you have deployed your own project with just one click following the steps above, you may encounter the issue of "Updates Available" constantly showing up. This is because Vercel will create a new project for you by default instead of forking this project, resulting in the inability to detect updates correctly.
-
-We recommend that you follow the steps below to re-deploy:
-
-- Delete the original repository;
-- Use the fork button in the upper right corner of the page to fork this project;
-- Choose and deploy in Vercel again, [please see the detailed tutorial](./docs/vercel-cn.md).
-
-### Enable Automatic Updates
-
-> If you encounter a failure of Upstream Sync execution, please [manually update code](./README.md#manually-updating-code).
-
-After forking the project, due to the limitations imposed by GitHub, you need to manually enable Workflows and Upstream Sync Action on the Actions page of the forked project. Once enabled, automatic updates will be scheduled every hour:
-
-![Automatic Updates](./docs/images/enable-actions.jpg)
-
-![Enable Automatic Updates](./docs/images/enable-actions-sync.jpg)
-
-### Manually Updating Code
-
-If you want to update instantly, you can check out the [GitHub documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) to learn how to synchronize a forked project with upstream code.
-
-You can star or watch this project or follow author to get release notifications in time.
-
-## Access Password
-
-This project provides limited access control. Please add an environment variable named `CODE` on the vercel environment variables page. The value should be passwords separated by comma like this:
-
-```
-code1,code2,code3
+```text
+deepseek-v4-pro@DeepSeek,deepseek-v4-flash@DeepSeek
 ```
 
-After adding or modifying this environment variable, please redeploy the project for the changes to take effect.
-
-## Environment Variables
-
-### `CODE` (optional)
-
-Access password, separated by comma.
-
-### `OPENAI_API_KEY` (required)
-
-Your openai api key, join multiple api keys with comma.
-
-### `BASE_URL` (optional)
-
-> Default: `https://api.openai.com`
-
-> Examples: `http://your-openai-proxy.com`
-
-Override openai api request base url.
-
-### `OPENAI_ORG_ID` (optional)
-
-Specify OpenAI organization ID.
-
-### `AZURE_URL` (optional)
-
-> Example: https://{azure-resource-url}/openai
-
-Azure deploy url.
-
-### `AZURE_API_KEY` (optional)
-
-Azure Api Key.
-
-### `AZURE_API_VERSION` (optional)
-
-Azure Api Version, find it at [Azure Documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#chat-completions).
-
-### `GOOGLE_API_KEY` (optional)
-
-Google Gemini Pro Api Key.
-
-### `GOOGLE_URL` (optional)
-
-Google Gemini Pro Api Url.
-
-### `ANTHROPIC_API_KEY` (optional)
-
-anthropic claude Api Key.
-
-### `ANTHROPIC_API_VERSION` (optional)
-
-anthropic claude Api version.
-
-### `ANTHROPIC_URL` (optional)
-
-anthropic claude Api Url.
-
-### `BAIDU_API_KEY` (optional)
-
-Baidu Api Key.
-
-### `BAIDU_SECRET_KEY` (optional)
-
-Baidu Secret Key.
-
-### `BAIDU_URL` (optional)
-
-Baidu Api Url.
-
-### `BYTEDANCE_API_KEY` (optional)
-
-ByteDance Api Key.
-
-### `BYTEDANCE_URL` (optional)
-
-ByteDance Api Url.
-
-### `ALIBABA_API_KEY` (optional)
-
-Alibaba Cloud Api Key.
-
-### `ALIBABA_URL` (optional)
-
-Alibaba Cloud Api Url.
-
-### `IFLYTEK_URL` (Optional)
-
-iflytek Api Url.
-
-### `IFLYTEK_API_KEY` (Optional)
-
-iflytek Api Key.
-
-### `IFLYTEK_API_SECRET` (Optional)
-
-iflytek Api Secret.
-
-### `CHATGLM_API_KEY` (optional)
-
-ChatGLM Api Key.
-
-### `CHATGLM_URL` (optional)
-
-ChatGLM Api Url.
-
-### `DEEPSEEK_API_KEY` (optional)
-
-DeepSeek Api Key.
-
-### `DEEPSEEK_URL` (optional)
-
-DeepSeek Api Url.
-
-### `HIDE_USER_API_KEY` (optional)
-
-> Default: Empty
-
-If you do not want users to input their own API key, set this value to 1.
-
-### `DISABLE_GPT4` (optional)
-
-> Default: Empty
-
-If you do not want users to use GPT-4, set this value to 1.
-
-### `ENABLE_BALANCE_QUERY` (optional)
-
-> Default: Empty
-
-If you do want users to query balance, set this value to 1.
-
-### `DISABLE_FAST_LINK` (optional)
-
-> Default: Empty
-
-If you want to disable parse settings from url, set this to 1.
-
-### `CUSTOM_MODELS` (optional)
-
-> Default: Empty
-> Example: `+llama,+claude-2,-gpt-3.5-turbo,gpt-4-1106-preview=gpt-4-turbo` means add `llama, claude-2` to model list, and remove `gpt-3.5-turbo` from list, and display `gpt-4-1106-preview` as `gpt-4-turbo`.
-
-To control custom models, use `+` to add a custom model, use `-` to hide a model, use `name=displayName` to customize model name, separated by comma.
-
-User `-all` to disable all default models, `+all` to enable all default models.
-
-For Azure: use `modelName@Azure=deploymentName` to customize model name and deployment name.
-
-> Example: `+gpt-3.5-turbo@Azure=gpt35` will show option `gpt35(Azure)` in model list.
-> If you only can use Azure model, `-all,+gpt-3.5-turbo@Azure=gpt35` will `gpt35(Azure)` the only option in model list.
-
-For ByteDance: use `modelName@bytedance=deploymentName` to customize model name and deployment name.
-
-> Example: `+Doubao-lite-4k@bytedance=ep-xxxxx-xxx` will show option `Doubao-lite-4k(ByteDance)` in model list.
-
-### `DEFAULT_MODEL` （optional）
-
-Change default model
-
-### `VISION_MODELS` (optional)
-
-> Default: Empty
-> Example: `gpt-4-vision,claude-3-opus,my-custom-model` means add vision capabilities to these models in addition to the default pattern matches (which detect models containing keywords like "vision", "claude-3", "gemini-1.5", etc).
-
-Add additional models to have vision capabilities, beyond the default pattern matching. Multiple models should be separated by commas.
-
-### `WHITE_WEBDAV_ENDPOINTS` (optional)
-
-You can use this option if you want to increase the number of webdav service addresses you are allowed to access, as required by the format：
-
-- Each address must be a complete endpoint
-  > `https://xxxx/yyy`
-- Multiple addresses are connected by ', '
-
-### `DEFAULT_INPUT_TEMPLATE` (optional)
-
-Customize the default template used to initialize the User Input Preprocessing configuration item in Settings.
-
-### `STABILITY_API_KEY` (optional)
-
-Stability API key.
-
-### `STABILITY_URL` (optional)
-
-Customize Stability API url.
-
-### `ENABLE_MCP` (optional)
-
-Enable MCP（Model Context Protocol）Feature
-
-### `SILICONFLOW_API_KEY` (optional)
-
-SiliconFlow API Key.
-
-### `SILICONFLOW_URL` (optional)
-
-SiliconFlow API URL.
-
-### `AI302_API_KEY` (optional)
-
-302.AI API Key.
-
-### `AI302_URL` (optional)
-
-302.AI API URL.
-
-## Requirements
-
-NodeJS >= 18, Docker >= 20
-
-## Development
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Yidadaa/ChatGPT-Next-Web)
-
-Before starting development, you must create a new `.env.local` file at project root, and place your api key into it:
-
-```
-OPENAI_API_KEY=<your api key here>
-
-# if you are not able to access openai service, use this BASE_URL
-BASE_URL=https://chatgpt1.nextweb.fun/api/proxy
+### WebSearch Tool Calling
+
+原版 NextChat 不会自动给普通模型补联网搜索能力。本项目新增 `WebSearch` tool，并注册为 OpenAI 兼容的 function tool，让模型在需要实时信息时自主调用搜索。
+
+调用流程：
+
+```text
+用户提问
+  -> DeepSeek 请求携带 WebSearch tool 定义
+  -> 模型判断是否需要搜索
+  -> 返回 tool_call: WebSearch
+  -> 前端 handler 调用 /api/search
+  -> 搜索结果作为 tool result 返回给模型
+  -> 模型基于搜索结果继续流式回答
 ```
 
-### Local Development
+这不是把搜索结果直接拼进用户提示词，而是使用 Tool Calling 循环，让模型自己决定什么时候搜索、搜索什么关键词。
 
-```shell
-# 1. install nodejs and yarn first
-# 2. config local env vars in `.env.local`
-# 3. run
-yarn install
-yarn dev
+### 免费搜索聚合后端
+
+新增 `/api/search` 接口：
+
+- 并发请求 3 个 SearXNG 公共实例。
+- 如果配置了 `TAVILY_API_KEY`，同时请求 Tavily 增强搜索质量。
+- 按 URL 去重合并结果。
+- 返回 Top 8 给模型使用。
+- 单个搜索源失败不会中断整体搜索。
+
+### 访问码保护
+
+访问码沿用 NextChat 机制：
+
+- 设置 `CODE` 后，用户需要输入访问码。
+- 不设置 `CODE` 时，服务端下发 `needCode=false`，直接进入聊天页。
+- 前端默认 `needCode=true`，启动后会从 `/api/config` 获取服务端真实配置覆盖。
+
+### Vercel 部署适配
+
+为了让项目在 Vercel 上更容易跑起来：
+
+- `vercel.json` 指定 Next.js 框架、构建命令、输出目录和安装命令。
+- `.npmrc` / `.yarnrc` 固定官方 registry，避免镜像源导致安装超时。
+- `next.config.mjs` 暂时跳过构建期 ESLint 和 TypeScript 阻断，优先保证部署可用。
+
+## 环境变量
+
+| 变量名 | 用途 | 必填 |
+| --- | --- | --- |
+| `CODE` | 站点访问码，设置后需要登录 | 建议 |
+| `TAVILY_API_KEY` | Tavily 搜索 API Key，用于增强搜索质量 | 可选 |
+
+DeepSeek API Key 推荐由用户在前端设置页填写，不需要在 Vercel 环境变量中统一配置。项目仍保留 NextChat 原有的 `DEEPSEEK_API_KEY` 服务端兜底能力，但个人使用场景下一般不需要。
+
+## 快速使用
+
+1. Fork 或 clone 本仓库。
+2. 部署到 Vercel。
+3. 在 Vercel 环境变量中设置 `CODE`。
+4. 可选设置 `TAVILY_API_KEY`。
+5. 打开网页，进入设置页。
+6. 模型服务商选择 `DeepSeek`。
+7. 填写自己的 DeepSeek API Key。
+8. 选择 DeepSeek 模型开始聊天。
+
+## 关键文件
+
+| 文件 | 说明 |
+| --- | --- |
+| `app/client/platforms/deepseek.ts` | 注册 `WebSearch` tool，并实现搜索 handler |
+| `app/api/search/route.ts` | SearXNG + Tavily 搜索聚合接口 |
+| `app/utils/chat.ts` | Tool Calling 循环执行引擎，负责执行 tool call 并继续流式请求 |
+| `app/api/deepseek.ts` | DeepSeek API 代理 |
+| `app/store/access.ts` | 访问码、API Key、服务商配置状态 |
+| `app/config/server.ts` | 读取服务端环境变量并生成下发配置 |
+| `next.config.mjs` | Next.js 构建配置 |
+| `vercel.json` | Vercel 部署配置 |
+
+## 常见问题
+
+### GitHub 首页为什么之前还是原版 NextChat 说明？
+
+GitHub 仓库首页默认显示根目录 `README.md`。之前只是增加了一个 RemoteAI 入口，原版 README 主体还在，所以页面看起来仍然像官方仓库。现在根目录 `README.md` 已替换为 RemoteAI 项目说明。
+
+### 搜索为什么有时不触发？
+
+`WebSearch` 是否触发由模型决定。普通常识问题可能不会搜索；涉及今天、最新版本、新闻、价格、政策、实时状态的问题更容易触发。
+
+### 为什么报错来自 openai.com？
+
+通常是当前模型服务商仍是 OpenAI。到设置页把模型服务商切换为 `DeepSeek`，并确保模型配置使用 DeepSeek 模型或 `@DeepSeek` 后缀。
+
+### 自定义 DeepSeek 模型为什么不工作？
+
+自定义模型需要加服务商后缀，例如：
+
+```text
+deepseek-v4-pro@DeepSeek
 ```
 
-## Deployment
+### 不配置 Tavily 可以搜索吗？
 
-### Docker (Recommended)
+可以。不配置 `TAVILY_API_KEY` 时，会使用免费 SearXNG 公共实例。配置 Tavily 可以增强搜索质量和稳定性。
 
-```shell
-docker pull yidadaa/chatgpt-next-web
+## 详细改动
 
-docker run -d -p 3000:3000 \
-   -e OPENAI_API_KEY=sk-xxxx \
-   -e CODE=your-password \
-   yidadaa/chatgpt-next-web
-```
+更完整的改动说明见 [REMOTEAI_CHANGES.md](./REMOTEAI_CHANGES.md)。
 
-You can start service behind a proxy:
+## 上游项目
 
-```shell
-docker run -d -p 3000:3000 \
-   -e OPENAI_API_KEY=sk-xxxx \
-   -e CODE=your-password \
-   -e PROXY_URL=http://localhost:7890 \
-   yidadaa/chatgpt-next-web
-```
+本项目基于 NextChat 二次开发。感谢原项目提供完整的聊天框架、PWA 能力、多模型支持和部署基础。
 
-If your proxy needs password, use:
-
-```shell
--e PROXY_URL="http://127.0.0.1:7890 user pass"
-```
-
-If enable MCP, use：
-
-```
-docker run -d -p 3000:3000 \
-   -e OPENAI_API_KEY=sk-xxxx \
-   -e CODE=your-password \
-   -e ENABLE_MCP=true \
-   yidadaa/chatgpt-next-web
-```
-
-### Shell
-
-```shell
-bash <(curl -s https://raw.githubusercontent.com/Yidadaa/ChatGPT-Next-Web/main/scripts/setup.sh)
-```
-
-## Synchronizing Chat Records (UpStash)
-
-| [简体中文](./docs/synchronise-chat-logs-cn.md) | [English](./docs/synchronise-chat-logs-en.md) | [Italiano](./docs/synchronise-chat-logs-es.md) | [日本語](./docs/synchronise-chat-logs-ja.md) | [한국어](./docs/synchronise-chat-logs-ko.md)
-
-## Documentation
-
-> Please go to the [docs][./docs] directory for more documentation instructions.
-
-- [Deploy with cloudflare (Deprecated)](./docs/cloudflare-pages-en.md)
-- [Frequent Ask Questions](./docs/faq-en.md)
-- [How to add a new translation](./docs/translation.md)
-- [How to use Vercel (No English)](./docs/vercel-cn.md)
-- [User Manual (Only Chinese, WIP)](./docs/user-manual-cn.md)
-
-## Translation
-
-If you want to add a new translation, read this [document](./docs/translation.md).
-
-## Donation
-
-[Buy Me a Coffee](https://www.buymeacoffee.com/yidadaa)
-
-## Special Thanks
-
-### Contributors
-
-<a href="https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ChatGPTNextWeb/ChatGPT-Next-Web" />
-</a>
-
-## LICENSE
-
-[MIT](https://opensource.org/license/mit/)
+- 上游仓库：[ChatGPTNextWeb/ChatGPT-Next-Web](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web)
+- 原项目协议：MIT
