@@ -110,32 +110,6 @@ DeepSeek API Key 推荐由用户在前端设置页填写，不需要在 Vercel �
 | `next.config.mjs` | Next.js 构建配置 |
 | `vercel.json` | Vercel 部署配置 |
 
-## 常见问题
-
-### GitHub 首页为什么之前还是原版 NextChat 说明？
-
-GitHub 仓库首页默认显示根目录 `README.md`。之前只是增加了一个 RemoteAI 入口，原版 README 主体还在，所以页面看起来仍然像官方仓库。现在根目录 `README.md` 已替换为 RemoteAI 项目说明。
-
-### 搜索为什么有时不触发？
-
-`WebSearch` 是否触发由模型决定。普通常识问题可能不会搜索；涉及今天、最新版本、新闻、价格、政策、实时状态的问题更容易触发。
-
-### 为什么报错来自 openai.com？
-
-通常是当前模型服务商仍是 OpenAI。到设置页把模型服务商切换为 `DeepSeek`，并确保模型配置使用 DeepSeek 模型或 `@DeepSeek` 后缀。
-
-### 自定义 DeepSeek 模型为什么不工作？
-
-自定义模型需要加服务商后缀，例如：
-
-```text
-deepseek-v4-pro@DeepSeek
-```
-
-### 不配置 Tavily 可以搜索吗？
-
-可以。不配置 `TAVILY_API_KEY` 时，会使用免费 SearXNG 公共实例。配置 Tavily 可以增强搜索质量和稳定性。
-
 ## 详细改动
 
 更完整的改动说明见 [REMOTEAI_CHANGES.md](./REMOTEAI_CHANGES.md)。
