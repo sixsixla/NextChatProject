@@ -6,6 +6,8 @@
 
 <h1 align="center">NextChat</h1>
 
+> 本仓库是 **RemoteAI** 二次开发版本：基于 NextChat 免费部署到 Vercel，面向移动端/PWA 使用，方便用户填写自己的 API Key，并为 DeepSeek 等默认无联网搜索的模型增加 WebSearch 工具。详见 [RemoteAI 改动说明](./REMOTEAI_CHANGES.md)。
+
 一键免费部署你的私人 ChatGPT 网页应用，支持 Claude, GPT4 & Gemini Pro 模型。
 
 [NextChatAI](https://nextchat.club?utm_source=readme) / [企业版](#%E4%BC%81%E4%B8%9A%E7%89%88) / [演示 Demo](https://chat-gpt-next-web.vercel.app/) / [反馈 Issues](https://github.com/Yidadaa/ChatGPT-Next-Web/issues) / [加入 Discord](https://discord.gg/zrhvHCr79N)

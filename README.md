@@ -8,6 +8,8 @@
 
 English / [简体中文](./README_CN.md)
 
+> This fork is customized as **RemoteAI**: a free Vercel-deployable, mobile-friendly AI chat tool for personal API keys, with an added WebSearch tool for DeepSeek-style models that do not provide built-in web search. See [RemoteAI change notes](./REMOTEAI_CHANGES.md).
+
 <a href="https://trendshift.io/repositories/5973" target="_blank"><img src="https://trendshift.io/api/badge/repositories/5973" alt="ChatGPTNextWeb%2FChatGPT-Next-Web | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
 ✨ Light and Fast AI Assistant,with Claude, DeepSeek, GPT4 & Gemini Pro support.
